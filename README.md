@@ -4,12 +4,18 @@ The TensorFlow code here classifies a single heartbeat from an ECG recording. Tw
 ## Data
 This analysis uses segmented time-series data obtained from https://www.kaggle.com/coni57/model-from-arxiv-1805-00794
 
-## Model
+## Models
+
+## Results
+RNN Model
+```
+
+```
 
 ## Files
-* `PreprocessECG.ipynb` is a Jupyter notebook used to clean and balance the data. It balances the class-distribution in the training set by upsampling under-represented classes.
+* `PreprocessECG.ipynb` is a Jupyter notebook used to format and balance the data. It balances the class-distribution in the training set by upsampling under-represented classes.
 * `ClassifyECG.ipynb` is a Jupyter notebook containing the classification model, training and evaluation code.
-* `ECG.xcodeproj` is an Xcode 10 project file that builds the Swift source in the `ECG` directory.
+* `ECG.xcodeproj` is an Xcode 10 project file that builds the Swift source from the `ECG` subdirectory.
 
 ## Implementation Notes
 * Python implementation tested with Python 3.6.7 and TensorFlow 1.12.0

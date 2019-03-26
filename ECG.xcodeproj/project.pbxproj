@@ -56,8 +56,8 @@
 				05A8DBEF222E25590002FD60 /* ECG */,
 				05B46A332239F40C003A70A6 /* Frameworks */,
 				05A8DBEE222E25590002FD60 /* Products */,
-				05241139224A7D4D007F705C /* LICENSE */,
 				05241138224A7D4D007F705C /* README.md */,
+				05241139224A7D4D007F705C /* LICENSE */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,7 +275,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7JWQTA27LH;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -285,7 +285,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7JWQTA27LH;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
