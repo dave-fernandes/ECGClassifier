@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0525C5A022413AE6006C665B /* libtensorflow_framework.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 0525C59E22413AE6006C665B /* libtensorflow_framework.so */; };
-		0525C5A122413AE6006C665B /* libtensorflow.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 0525C59F22413AE6006C665B /* libtensorflow.so */; };
 		05928E28222EBC2D00C0525E /* loadDatasets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05928E27222EBC2D00C0525E /* loadDatasets.swift */; };
 		0592935D223466BC006DF25D /* ConvModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DBFD222E28BB0002FD60 /* ConvModel.swift */; };
 		05A8DBF1222E25590002FD60 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DBF0222E25590002FD60 /* main.swift */; };
+		05CA009822512FCE00E5B849 /* libtensorflow.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CA009622512FCE00E5B849 /* libtensorflow.so */; };
+		05CA009922512FCE00E5B849 /* libtensorflow_framework.so in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CA009722512FCE00E5B849 /* libtensorflow_framework.so */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,12 +29,12 @@
 /* Begin PBXFileReference section */
 		05241138224A7D4D007F705C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		05241139224A7D4D007F705C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		0525C59E22413AE6006C665B /* libtensorflow_framework.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtensorflow_framework.so; path = "../../../../../../Library/Developer/Toolchains/swift-tensorflow-LOCAL-2019-03-19-a.xctoolchain/usr/lib/swift/macosx/libtensorflow_framework.so"; sourceTree = "<group>"; };
-		0525C59F22413AE6006C665B /* libtensorflow.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtensorflow.so; path = "../../../../../../Library/Developer/Toolchains/swift-tensorflow-LOCAL-2019-03-19-a.xctoolchain/usr/lib/swift/macosx/libtensorflow.so"; sourceTree = "<group>"; };
 		05928E27222EBC2D00C0525E /* loadDatasets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadDatasets.swift; sourceTree = "<group>"; };
 		05A8DBED222E25590002FD60 /* ECG */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ECG; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A8DBF0222E25590002FD60 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		05A8DBFD222E28BB0002FD60 /* ConvModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvModel.swift; sourceTree = "<group>"; };
+		05CA009622512FCE00E5B849 /* libtensorflow.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtensorflow.so; path = "../../../../../../Library/Developer/Toolchains/swift-tensorflow-DEVELOPMENT-2019-03-26-a.xctoolchain/usr/lib/swift/macosx/libtensorflow.so"; sourceTree = "<group>"; };
+		05CA009722512FCE00E5B849 /* libtensorflow_framework.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtensorflow_framework.so; path = "../../../../../../Library/Developer/Toolchains/swift-tensorflow-DEVELOPMENT-2019-03-26-a.xctoolchain/usr/lib/swift/macosx/libtensorflow_framework.so"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,8 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0525C5A122413AE6006C665B /* libtensorflow.so in Frameworks */,
-				0525C5A022413AE6006C665B /* libtensorflow_framework.so in Frameworks */,
+				05CA009822512FCE00E5B849 /* libtensorflow.so in Frameworks */,
+				05CA009922512FCE00E5B849 /* libtensorflow_framework.so in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,8 +82,8 @@
 		05B46A332239F40C003A70A6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0525C59E22413AE6006C665B /* libtensorflow_framework.so */,
-				0525C59F22413AE6006C665B /* libtensorflow.so */,
+				05CA009722512FCE00E5B849 /* libtensorflow_framework.so */,
+				05CA009622512FCE00E5B849 /* libtensorflow.so */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -275,7 +275,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7JWQTA27LH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -285,7 +285,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7JWQTA27LH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
