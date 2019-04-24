@@ -22,11 +22,11 @@ public struct ConvUnit<Scalar: TensorFlowFloatingPoint> : Layer {
     }
     
     @differentiable
-    public func applied(to input: Tensor<Scalar>, in context: Context) -> Tensor<Scalar> {
-        var tmp = conv2.applied(to: conv1.applied(to: input, in: context), in: context)
-        tmp = pool.applied(to: relu(tmp + input), in: context)
+    public func call(_ input: Tensor<Scalar>) -> Tensor<Scalar> {
+        var tmp = conv2(conv1(input))
+        tmp = pool(relu(tmp + input))
         return tmp
-    }    
+    }
 }
 
 public struct ConvModel : Layer {
@@ -53,13 +53,13 @@ public struct ConvModel : Layer {
     }
     
     @differentiable
-    public func applied(to input: Tensor<Float>, in context: Context) -> Tensor<Float> {
-        var tmp = conv1.applied(to: input.expandingShape(at: 2), in: context)
-        tmp = unit2.applied(to: unit1.applied(to: tmp, in: context), in: context)
-        tmp = unit4.applied(to: unit3.applied(to: tmp, in: context), in: context)
-        tmp = unit5.applied(to: tmp, in: context).reshaped(to: [-1, 64])
-        tmp = dense2.applied(to: dense1.applied(to: tmp, in: context), in: context)
-        tmp = dense3.applied(to: tmp, in: context)
+    public func call(_ input: Tensor<Float>) -> Tensor<Float> {
+        var tmp = conv1(input.expandingShape(at: 2))
+        tmp = unit2(unit1(tmp))
+        tmp = unit4(unit3(tmp))
+        tmp = unit5(tmp).reshaped(to: [-1, 64])
+        tmp = dense2(dense1(tmp))
+        tmp = dense3(tmp)
         return tmp
     }
     
@@ -71,7 +71,7 @@ public struct ConvModel : Layer {
 typealias ECGModel = ConvModel
 
 @differentiable(wrt: model)
-func loss(model: ECGModel, series: Tensor<Float>, labels: Tensor<Int32>, in context: Context) -> Tensor<Float> {
-    let logits = model.applied(to: series, in: context)
-    return softmaxCrossEntropy(logits: logits, labels: labels)
+func loss(model: ECGModel, examples: Example) -> Tensor<Float> {
+    let logits = model(examples.series)
+    return softmaxCrossEntropy(logits: logits, labels: examples.labels)
 }
