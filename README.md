@@ -48,14 +48,9 @@ Both models were trained for 8000 parameter updates with a mini-batch size of 20
    micro avg       0.94      0.94      0.94       500
    macro avg       0.95      0.94      0.94       500
 weighted avg       0.95      0.94      0.94       500
-
+ ```
 Confusion Matrix
-[[98  0  2  0  0]
- [ 7 91  2  0  0]
- [ 0  1 97  2  0]
- [ 6  1  6 87  0]
- [ 1  0  0  0 99]]
-```
+ ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-CNN.png "Confusion matrix for CNN classifier.")
 
 #### Recurrent Model
 ```
@@ -70,14 +65,26 @@ Confusion Matrix
    micro avg       0.93      0.93      0.93       500
    macro avg       0.94      0.93      0.93       500
 weighted avg       0.94      0.93      0.93       500
-
-Confusion Matrix
-[[97  2  1  0  0]
- [10 89  0  0  1]
- [ 4  0 92  2  2]
- [ 4  0  7 89  0]
- [ 0  0  1  0 99]]
  ```
+Confusion Matrix
+ ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-RNN.png "Confusion matrix for RNN classifier.")
+
+#### Bayesian Model
+```
+              precision    recall  f1-score   support
+
+           0       0.85      0.99      0.91       100
+           1       0.98      0.91      0.94       100
+           2       0.90      0.94      0.92       100
+           3       0.98      0.84      0.90       100
+           4       1.00      0.99      0.99       100
+
+   micro avg       0.93      0.93      0.93       500
+   macro avg       0.94      0.93      0.93       500
+weighted avg       0.94      0.93      0.93       500
+ ```
+Confusion Matrix
+ ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-BNN.png "Confusion matrix for BNN classifier.")
 
 ## Discussion
 Both models exhibited sufficient capacity to learn the training distribution with high accuracy. The error rates for both models were highest for the classes with the fewest examples. Collecting more data for the S- and F-type arrhythmias would likely increase the overall accuracy of the trained models.
