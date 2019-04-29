@@ -33,7 +33,7 @@ Since the model operates on segmented heartbeat samples, we can use a bidirectio
 
 #### Bayesian Model
 
-This model used the same network architecture as the convolutional (CNN) model above. However, the weights were stochastic, and posterior distributions of weights were trained using the Flipout method \(Wen, Vicol, Ba, Tran, \& Grosse, 2018\)[https://arxiv.org/abs/1803.04386].
+This model used the same network architecture as the convolutional (CNN) model above. However, the weights were stochastic, and posterior distributions of weights were trained using the Flipout method [\(Wen, Vicol, Ba, Tran, \& Grosse, 2018\)](https://arxiv.org/abs/1803.04386).
 
 ### Training
 The CNN and RNN models were trained for 8000 parameter updates with a mini-batch size of 200 using the Adam optimizer with exponential learning rate decay. See notebook for parameter values. The RNN model took about 10x longer to train (wall time) than the CNN model.
@@ -82,18 +82,20 @@ Confusion Matrix
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-RNN.png "Confusion matrix for RNN classifier.")
 
 #### Bayesian Model
+For the Bayesian model, we obtain a Monte Carlo estimate for the most probable class. This class is then evaluated as above based on precision, recall, and the confusion matrix.
+
 ```
               precision    recall  f1-score   support
 
-           0       0.85      0.99      0.91       100
-           1       0.98      0.91      0.94       100
-           2       0.90      0.94      0.92       100
-           3       0.98      0.84      0.90       100
+           0       0.88      0.98      0.92       100
+           1       0.97      0.91      0.94       100
+           2       0.92      0.98      0.95       100
+           3       0.99      0.88      0.93       100
            4       1.00      0.99      0.99       100
 
-   micro avg       0.93      0.93      0.93       500
-   macro avg       0.94      0.93      0.93       500
-weighted avg       0.94      0.93      0.93       500
+   micro avg       0.95      0.95      0.95       500
+   macro avg       0.95      0.95      0.95       500
+weighted avg       0.95      0.95      0.95       500
  ```
 Confusion Matrix
 
@@ -103,8 +105,8 @@ Confusion Matrix
 #### CNN versus RNN
 The CNN model has 53,957 parameters and the RNN model has 240,293. Moreover, the serial nature of the RNN causes it to be less parallelizable than the CNN. Given that the CNN is slightly more accurate than the RNN, it provides an all-around better solution.
 
-#### Estimating Probabilities
-
+#### Maximum Likelihood versus Bayesian Estimate
+The Bayesian model has slightly better performance than the standard CNN model with its maximum likelihood estimate (MLE). However, due to the small test-set size, this difference in performance may not be statistically significant. Still, the KL-divergence term in the loss for the Bayesian model should have a regularizing effect and allow the BNN model to generalize better.
 
 ## Files
 * `PreprocessECG.ipynb` is a Jupyter notebook used to format and balance the data.
