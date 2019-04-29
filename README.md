@@ -1,5 +1,5 @@
 # ECG Time-Series Classification
-The TensorFlow code in this project classifies a single heartbeat from an ECG recording. Two classification models were tested: a 1-D convolutional neural network (CNN); and recurrent neural network (RNN). The CNN model is implemented in both Swift and Python; the RNN model is Python-only.
+The TensorFlow code in this project classifies a single heartbeat from an ECG recording. Three classification models were tested: a 1-D convolutional neural network (CNN); a recurrent neural network (RNN); and a Bayesian neural network (BNN) based on the CNN architecture. The CNN model is implemented in both Swift and Python; the RNN and BNN models are Python-only.
 
 ## Data
 This analysis used segmented time-series data obtained from https://www.kaggle.com/shayanfazeli/heartbeat
@@ -31,10 +31,20 @@ Model consists of:
 
 Since the model operates on segmented heartbeat samples, we can use a bidirectional RNN because the whole segment is available for processing at one time. It is also a more \"fair\" comparison with the CNN.
 
+#### Bayesian Model
+
+This model used the same network architecture as the convolutional (CNN) model above. However, the weights were stochastic, and posterior distributions of weights were trained using the Flipout method \(Wen, Vicol, Ba, Tran, \& Grosse, 2018\)[https://arxiv.org/abs/1803.04386].
+
 ### Training
-Both models were trained for 8000 parameter updates with a mini-batch size of 200 using the Adam optimizer with exponential learning rate decay. See code for parameter values. The RNN model took about 10x longer to train (wall time) than the CNN model.
+The CNN and RNN models were trained for 8000 parameter updates with a mini-batch size of 200 using the Adam optimizer with exponential learning rate decay. See notebook for parameter values. The RNN model took about 10x longer to train (wall time) than the CNN model.
+
+The BNN model was trained for 3.5M parameter updates with a mini-batch size of 125 using the Adam optimizer with a fixed learning rate. The KL-divergence loss was annealed according to the [TensorFlow Probability example scheme](https://github.com/tensorflow/probability/blob/master/tensorflow_probability/examples/cifar10_bnn.py). See notebook for parameter values.
 
 ## Results
+All models exhibited sufficient capacity to learn the training distribution with high accuracy. The error rates for all models were highest for the classes with the fewest examples. Collecting more data for the S- and F-type arrhythmias would likely increase the overall accuracy of the trained models.
+
+In contrast with [Kachuee, Fazeli, & Sarrafzadeh \(2018\)](https://arxiv.org/pdf/1805.00794.pdf), we chose to upsample the under-represented classes rather than augment data as we do not have a physiologically valid generative model for heartbeats. Kachuee _et al._ also used augmented data as part of their test set without justification and we did not. As a consequence, our test set is much smaller. That said, our results for the convolutional model appear to be consistent with theirs.
+
 #### Convolutional Model
 ```
               precision    recall  f1-score   support
@@ -50,6 +60,7 @@ Both models were trained for 8000 parameter updates with a mini-batch size of 20
 weighted avg       0.95      0.94      0.94       500
  ```
 Confusion Matrix
+
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-CNN.png "Confusion matrix for CNN classifier.")
 
 #### Recurrent Model
@@ -67,6 +78,7 @@ Confusion Matrix
 weighted avg       0.94      0.93      0.93       500
  ```
 Confusion Matrix
+
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-RNN.png "Confusion matrix for RNN classifier.")
 
 #### Bayesian Model
@@ -84,20 +96,22 @@ Confusion Matrix
 weighted avg       0.94      0.93      0.93       500
  ```
 Confusion Matrix
+
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-BNN.png "Confusion matrix for BNN classifier.")
 
 ## Discussion
-Both models exhibited sufficient capacity to learn the training distribution with high accuracy. The error rates for both models were highest for the classes with the fewest examples. Collecting more data for the S- and F-type arrhythmias would likely increase the overall accuracy of the trained models.
-
-In contrast with [Kachuee, Fazeli, & Sarrafzadeh \(2018\)](https://arxiv.org/pdf/1805.00794.pdf), we chose to upsample the under-represented classes rather than augment data as we do not have a physiologically valid generative model for heartbeats. Kachuee _et al._ also used augmented data as part of their test set without justification and we did not. As a consequence, our test set is much smaller. That said, our results for the convolutional model appear to be consistent with theirs.
-
+#### CNN versus RNN
 The CNN model has 53,957 parameters and the RNN model has 240,293. Moreover, the serial nature of the RNN causes it to be less parallelizable than the CNN. Given that the CNN is slightly more accurate than the RNN, it provides an all-around better solution.
+
+#### Estimating Probabilities
+
 
 ## Files
 * `PreprocessECG.ipynb` is a Jupyter notebook used to format and balance the data.
-* `ClassifyECG.ipynb` is a Jupyter notebook containing the classification models, as well as training and evaluation code.
+* `ClassifyECG.ipynb` is a Jupyter notebook containing the CNN and RNN classification models, as well as training and evaluation code.
+* `BayesClassifierECG.ipynb` is a Jupyter notebook containing the Bayesian classification model, as well as training and evaluation code.
 * `ECG.xcodeproj` is an Xcode 10 project file that builds the Swift source from the `ECG` subdirectory to train the CNN model.
 
 ## Implementation Notes
-* Python implementation tested with Python 3.6.7 and TensorFlow 1.12.0
+* Python implementation tested with Python 3.6.7, TensorFlow 1.13.1, and TensorFlow Probability 0.6.0
 * Swift implementation tested with Swift compiler commit: `apple/swift:tensorflow 9bf0fc1eb5071ae9856e15cb75d9b1aead415d80`; and TensorFlow library commit: `tensorflow/swift-apis:master d87fab3a9b68c096a07a4331bcfbb2abd4e85be1`
