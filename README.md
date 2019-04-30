@@ -6,7 +6,7 @@ This analysis used segmented time-series data obtained from https://www.kaggle.c
 * Time series are zero-padded, 187-element vectors containing the ECG lead II signal for one heartbeat.
 * Labels [0, ..., 4] represent normal heartbeats and 4 classes of arrhythmia ['N', 'S', 'V', 'F', 'Q'].
 * The class distribution is highly skewed. N = [90589, 2779, 7236, 803, 8039].
-* In `PreprocessECG.ipynb` we take 100 examples from each class for the test set, and use the remainder for the training set. Under-represented classes are upsampled to balance the class ratios for training.
+* In `PreprocessECG.ipynb` I take 100 examples from each class for the test set, and use the remainder for the training set. Under-represented classes are upsampled to balance the class ratios for training.
 
 Thank you to Shayan Fazeli for providing this data set.
 
@@ -43,11 +43,11 @@ The BNN model was trained for 3.5M parameter updates with a mini-batch size of 1
 ## Results
 All models exhibited sufficient capacity to learn the training distribution with high accuracy. The error rates for all models were highest for the classes with the fewest examples. Collecting more data for the S- and F-type arrhythmias would likely increase the overall accuracy of the trained models.
 
-In contrast with [Kachuee, Fazeli, & Sarrafzadeh \(2018\)](https://arxiv.org/pdf/1805.00794.pdf), we chose to upsample the under-represented classes rather than augment data as we do not have a physiologically valid generative model for heartbeats. Kachuee _et al._ also used augmented data as part of their test set without justification and we did not. As a consequence, our test set is much smaller. That said, our results for the convolutional model appear to be consistent with theirs.
+In contrast with [Kachuee, Fazeli, & Sarrafzadeh \(2018\)](https://arxiv.org/pdf/1805.00794.pdf), I chose to upsample the under-represented classes rather than augment data as we do not have a physiologically valid generative model for heartbeats. Kachuee _et al._ also used augmented data as part of their test set without justification and I did not. As a consequence, my test set is much smaller. That said, my results for the convolutional model appear to be consistent with theirs.
 
 #### Convolutional Model
 ```
-              precision    recall  f1-score   support
+       class  precision    recall  f1-score   support
 
            0       0.88      0.98      0.92       100
            1       0.98      0.91      0.94       100
@@ -65,7 +65,7 @@ Confusion Matrix
 
 #### Recurrent Model
 ```
-              precision    recall  f1-score   support
+       class  precision    recall  f1-score   support
 
            0       0.84      0.97      0.90       100
            1       0.98      0.89      0.93       100
@@ -82,10 +82,10 @@ Confusion Matrix
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CM-RNN.png "Confusion matrix for RNN classifier.")
 
 #### Bayesian Model
-For the Bayesian model, we obtain a Monte Carlo estimate for the most probable class. This class is then evaluated as above based on precision, recall, and the confusion matrix.
+For the Bayesian model, I obtained a Monte Carlo estimate for the most probable class. This class was then evaluated as above based on precision, recall, and the confusion matrix.
 
 ```
-              precision    recall  f1-score   support
+       class  precision    recall  f1-score   support
 
            0       0.88      0.98      0.92       100
            1       0.97      0.91      0.94       100
@@ -111,11 +111,11 @@ The Bayesian model has slightly better performance than the standard CNN model w
 #### Probability Estimation
 The Bayesian neural network lore states that Bayesian networks produce better probability estimates than their standard \(maximum likelihood\) NN counterparts. We can check this by comparing the accuracy of the softmax \"probability\" estimate in the standard CNN model with the accuracy of the Monte Carlo probability estimate from the Bayesian network.
 
-Frequency of correct CNN classifications versus softmax \"probability\" estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
+Fraction of correct CNN classifications versus softmax \"probability\" estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
 
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CNN-probability.png "Probability estimates for CNN classifier.")
 
-Frequency of correct Bayesian network classifications versus Monte Carlo probability estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
+Fraction of correct Bayesian network classifications versus Monte Carlo probability estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
 
  ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/BNN-probability.png "Probability estimates for Bayesian classifier.")
  
@@ -129,4 +129,4 @@ Frequency of correct Bayesian network classifications versus Monte Carlo probabi
 
 ## Implementation Notes
 * Python implementation tested with Python 3.6.7, TensorFlow 1.13.1, and TensorFlow Probability 0.6.0
-* Swift implementation tested with Swift compiler commit: `apple/swift:tensorflow 9bf0fc1eb5071ae9856e15cb75d9b1aead415d80`; and TensorFlow library commit: `tensorflow/swift-apis:master d87fab3a9b68c096a07a4331bcfbb2abd4e85be1`
+* Swift implementation tested in Xcode 10.1 with Swift compiler commit: `apple/swift:tensorflow 9bf0fc1eb5071ae9856e15cb75d9b1aead415d80`; and TensorFlow library commit: `tensorflow/swift-apis:master d87fab3a9b68c096a07a4331bcfbb2abd4e85be1`
