@@ -108,6 +108,19 @@ The CNN model has 53,957 parameters and the RNN model has 240,293. Moreover, the
 #### Maximum Likelihood versus Bayesian Estimate
 The Bayesian model has slightly better performance than the standard CNN model with its maximum likelihood estimate (MLE). However, due to the small test-set size, this difference in performance may not be statistically significant. Still, the KL-divergence term in the loss for the Bayesian model should have a regularizing effect and allow the BNN model to generalize better.
 
+#### Probability Estimation
+The Bayesian neural network lore states that Bayesian networks produce better probability estimates than their standard \(maximum likelihood\) NN counterparts. We can check this by comparing the accuracy of the softmax \"probability\" estimate in the standard CNN model with the accuracy of the Monte Carlo probability estimate from the Bayesian network.
+
+Frequency of correct CNN classifications versus softmax \"probability\" estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
+
+ ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/CNN-probability.png "Probability estimates for CNN classifier.")
+
+Frequency of correct Bayesian network classifications versus Monte Carlo probability estimate, binned by estimate value. Error bars are 68% binomial confidence limits. The one-to-one line is the expected value if the estimate were perfect.
+
+ ![alt text](https://github.com/dave-fernandes/ECGClassifier/blob/master/images/BNN-probability.png "Probability estimates for Bayesian classifier.")
+ 
+ It is clear from the plots that the standard \(maximum likelihood\) network is estimating probability at least as well as the Bayesian network.
+
 ## Files
 * `PreprocessECG.ipynb` is a Jupyter notebook used to format and balance the data.
 * `ClassifyECG.ipynb` is a Jupyter notebook containing the CNN and RNN classification models, as well as training and evaluation code.
