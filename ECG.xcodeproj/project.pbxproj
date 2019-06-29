@@ -48,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				05A8DBEF222E25590002FD60 /* ECG */,
-				05B46A332239F40C003A70A6 /* Frameworks */,
 				05A8DBEE222E25590002FD60 /* Products */,
 				05241138224A7D4D007F705C /* README.md */,
 				05241139224A7D4D007F705C /* LICENSE */,
@@ -71,13 +70,6 @@
 				05A8DBFD222E28BB0002FD60 /* ConvModel.swift */,
 			);
 			path = ECG;
-			sourceTree = "<group>";
-		};
-		05B46A332239F40C003A70A6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,7 +99,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "MintLeaf Software Inc.";
 				TargetAttributes = {
 					05A8DBEC222E25590002FD60 = {
@@ -267,6 +259,7 @@
 		05A8DBF5222E25590002FD60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7JWQTA27LH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -277,6 +270,7 @@
 		05A8DBF6222E25590002FD60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7JWQTA27LH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
