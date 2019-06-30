@@ -8,23 +8,28 @@
 
 import TensorFlow
 import Python
+import Foundation
 
-let batchSize: Int = 500
+let batchSize: Int = 200
+let maxEpochs: Int = 2
 
 let (trainDataset, testDataset) = loadDatasets()
-let trainingBatches = trainDataset.batched(batchSize)
-let testBatches = testDataset.batched(batchSize)
+let testBatches = testDataset.batched(1000)
 
 var model = ECGModel()
 let optimizer = Adam(for: model, learningRate: 0.001, decay: 0)
 
-for epoch in 1...50 {
+// Training loop
+for epoch in 1...maxEpochs {
     print("Epoch \(epoch), training...")
     
     var trainingLossSum: Float = 0
     var trainingBatchCount = 0
+    let trainingShuffled = trainDataset.shuffled(sampleCount: 500000, randomSeed: Int64(epoch))
+    let t0 = Date()
     
-    for batch in trainingBatches {
+    // Loop over mini-batches in training set
+    for batch in trainingShuffled.batched(batchSize) {
         let gradients = gradient(at: model) {
             (model: ECGModel) -> Tensor<Float> in
             
@@ -35,11 +40,14 @@ for epoch in 1...50 {
         }
         optimizer.update(&model.allDifferentiableVariables, along: gradients)
     }
-    print("  training loss: \(trainingLossSum / Float(trainingBatchCount))")
+    
+    let t1 = Date()
+    print("  training loss: \(trainingLossSum / Float(trainingBatchCount))  step: \(trainingBatchCount * epoch) (\(t1.timeIntervalSince(t0)) sec)")
     
     var testLossSum: Float = 0
     var testBatchCount = 0
     
+    // Loop over test set
     for batch in testBatches {
         testLossSum += loss(model: model, examples: batch).scalarized()
         testBatchCount += 1
@@ -47,6 +55,7 @@ for epoch in 1...50 {
     print("  test loss: \(testLossSum / Float(testBatchCount))")
 }
 
+// Print metrics and confusion matrix
 var yActual = [Int32]()
 var yPredicted = [Int32]()
 

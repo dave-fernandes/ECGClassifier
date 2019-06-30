@@ -23,7 +23,7 @@ public struct ConvUnit<Scalar: TensorFlowFloatingPoint> : Layer {
     
     @differentiable
     public func callAsFunction(_ input: Tensor<Scalar>) -> Tensor<Scalar> {
-        var tmp = conv2(conv1(input))
+        var tmp = input.sequenced(through: conv1, conv2)
         tmp = pool(relu(tmp + input))
         return tmp
     }
@@ -34,7 +34,6 @@ public struct ConvModel : Layer {
     var convUnit = [ConvUnit<Float>]()
     var dense1: Dense<Float>
     var dense2: Dense<Float>
-    var dense3: Dense<Float>
     
     @noDerivative let convUnitCount = 5
     
@@ -44,21 +43,22 @@ public struct ConvModel : Layer {
             convUnit.append(ConvUnit<Float>(kernelSize: 5, channels: 32))
         }
         dense1 = Dense<Float>(inputSize: 64, outputSize: 32, activation: relu)
-        dense2 = Dense<Float>(inputSize: 32, outputSize: 32, activation: relu)
-        dense3 = Dense<Float>(inputSize: 32, outputSize: 5)
+        dense2 = Dense<Float>(inputSize: 32, outputSize: 5)
     }
     
     @differentiable
     public func callAsFunction(_ input: Tensor<Float>) -> Tensor<Float> {
         var tmp = conv1(input.expandingShape(at: 2))
         
-        tmp = tmp.sequenced(through: convUnit[0], convUnit[1], convUnit[2], convUnit[3], convUnit[4])
+        // FIXME: This doesn't compile
 //        for i in 0..<convUnitCount {
 //            let unit = convUnit[i]
 //            tmp = unit(tmp)
 //        }
+        tmp = tmp.sequenced(through: convUnit[0], convUnit[1], convUnit[2], convUnit[3], convUnit[4])
+        
         tmp = tmp.reshaped(to: [-1, 64])
-        tmp = tmp.sequenced(through: dense1, dense2, dense3)
+        tmp = tmp.sequenced(through: dense1, dense2)
         return tmp
     }
     
