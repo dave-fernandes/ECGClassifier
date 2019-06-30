@@ -125,8 +125,8 @@ Fraction of correct Bayesian network classifications versus Monte Carlo probabil
 * `PreprocessECG.ipynb` is a Jupyter notebook used to format and balance the data.
 * `ClassifyECG.ipynb` is a Jupyter notebook containing the CNN and RNN classification models, as well as training and evaluation code.
 * `BayesClassifierECG.ipynb` is a Jupyter notebook containing the Bayesian classification model, as well as training and evaluation code.
-* `ECG.xcodeproj` is an Xcode 10 project file that builds the Swift source from the `ECG` subdirectory to train the CNN model.
+* `ECG.xcodeproj` is an Xcode 11 project file that builds the Swift source from the `ECG` subdirectory to train the CNN model.
 
 ## Implementation Notes
 * Python implementation tested with Python 3.6.7, TensorFlow 1.13.1, and TensorFlow Probability 0.6.0
-* Swift implementation tested in Xcode 10.1 with Swift compiler commit: `apple/swift:tensorflow 9bf0fc1eb5071ae9856e15cb75d9b1aead415d80`; and TensorFlow library commit: `tensorflow/swift-apis:master d87fab3a9b68c096a07a4331bcfbb2abd4e85be1`
+* Swift implementation tested in Xcode 11 with Swift for Tensorflow toolchain 0.4.0
