@@ -50,12 +50,10 @@ public struct ConvModel : Layer {
     public func callAsFunction(_ input: Tensor<Float>) -> Tensor<Float> {
         var tmp = conv1(input.expandingShape(at: 2))
         
-        // FIXME: This doesn't compile
-//        for i in 0..<convUnitCount {
-//            let unit = convUnit[i]
-//            tmp = unit(tmp)
-//        }
-        tmp = tmp.sequenced(through: convUnit[0], convUnit[1], convUnit[2], convUnit[3], convUnit[4])
+        for i in 0..<convUnitCount {
+            let unit = convUnit[i]
+            tmp = unit(tmp)
+        }
         
         tmp = tmp.reshaped(to: [-1, 64])
         tmp = tmp.sequenced(through: dense1, dense2)

@@ -11,7 +11,7 @@ import Python
 import Foundation
 
 let batchSize: Int = 200
-let maxEpochs: Int = 2
+let maxEpochs: Int = 4
 
 let (trainDataset, testDataset) = loadDatasets()
 let testBatches = testDataset.batched(1000)
